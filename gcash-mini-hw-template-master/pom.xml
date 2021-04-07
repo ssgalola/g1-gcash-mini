@@ -6,6 +6,7 @@
     <modules>
         <module>api-gateway</module>
         <module>activity</module>
+        <module>product</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
