@@ -14,6 +14,7 @@ import ph.apper.product.service.ProductService;
 import javax.validation.Valid;
 import java.util.List;
 
+//Purchase
 @RestController
 @RequestMapping("purchase")
 public class PurchaseController {
