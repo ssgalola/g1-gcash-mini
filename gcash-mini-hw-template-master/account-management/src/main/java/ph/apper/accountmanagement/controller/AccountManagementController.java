@@ -29,7 +29,7 @@ public class AccountManagementController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>("Invalid email or verification code.",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Invalid email or verification code.", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/authenticate")
@@ -38,10 +38,10 @@ public class AccountManagementController {
             if(account.getEmail().equals(request.getEmail()) && account.getPassword().equals(request.getPassword())){
                 HashMap<String, UUID> accountInfo = new HashMap<>();
                 accountInfo.put("accountId", account.getAccountId());
-                return new ResponseEntity<>(accountInfo,HttpStatus.OK);
+                return new ResponseEntity<>(accountInfo, HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Invalid email or password.", HttpStatus.FORBIDDEN);
     }
 }
 
