@@ -1,3 +1,5 @@
+###SpringBoot PID
+*.pid
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
