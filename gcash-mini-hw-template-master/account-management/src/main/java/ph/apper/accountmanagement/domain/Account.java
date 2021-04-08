@@ -1,6 +1,5 @@
 package ph.apper.accountmanagement.domain;
 
-import javax.persistence.Id;
 import lombok.Data;
 
 import java.math.BigDecimal;
