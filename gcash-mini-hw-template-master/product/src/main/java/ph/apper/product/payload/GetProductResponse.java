@@ -3,8 +3,7 @@ package ph.apper.product.payload;
 import lombok.Data;
 
 @Data
-public class Product {
+public class GetProductResponse {
     private String name;
-    private Double price;
-    private String productId;
+    private String price;
 }
