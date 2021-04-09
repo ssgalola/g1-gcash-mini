@@ -4,44 +4,58 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ph.apper.product.controller.ProductController;
-import ph.apper.product.exception.ProductNotFoundException;
-import ph.apper.product.payload.AddProduct;
-import ph.apper.product.payload.AddProductResponse;
-import ph.apper.product.payload.GetProductResponse;
-import ph.apper.product.payload.ProductData;
-import ph.apper.product.service.ProductService;
-import ph.apper.purchase.exception.TransferNotFoundException;
-import ph.apper.purchase.payload.GetTransferResponse;
-import ph.apper.purchase.payload.TransferData;
+import org.springframework.web.client.RestTemplate;
+import ph.apper.purchase.domain.Account;
 import ph.apper.purchase.payload.TransferMoney;
 import ph.apper.purchase.payload.TransferMoneyResponse;
 import ph.apper.purchase.service.TransferService;
 
 import javax.validation.Valid;
-import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 @RestController
 @RequestMapping("transfer")
 public class TransferController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransferController.class);
 
+    private final RestTemplate restTemplate;
+
     private final TransferService transferService;
 
-    public TransferController(TransferService transferService) {
+    public TransferController(RestTemplate restTemplate, TransferService transferService) {
+        this.restTemplate = restTemplate;
         this.transferService = transferService;
     }
 
     @GetMapping
-    public ResponseEntity<List<TransferData>> getAll() {
-        return ResponseEntity.ok(transferService.getAllTransfers());
-    }
+    public ResponseEntity transfer(@RequestBody TransferMoney request) {
+        System.out.println(request);
 
-    @GetMapping("{transferID}")
-    public ResponseEntity<GetTransferResponse> getTransfer(@PathVariable("transferID") String transferID) throws TransferNotFoundException, TransferNotFoundException {
-        GetTransferResponse response = transferService.getTransfer(transferID);
+        Account sender = new Account();
+        sender.setID(request.getSenderID());
+//        ResponseEntity<Object> senderResponse = restTemplate.getForEntity("http://localhost:8080/account", Object.class);
 
-        return ResponseEntity.ok(response);
+        Account recipient = new Account();
+        recipient.setID(request.getRecipientID());
+//        ResponseEntity<Object> recipientResponse = restTemplate.getForEntity("http://localhost:8080/account", Object.class);
+
+//        if (recipientResponse.getStatusCode().is2xxSuccessful() &&
+//                senderResponse.getStatusCode().is2xxSuccessful()) {
+//            sender.setBalance(String.valueOf(1500 - parseInt(request.getAmount())));
+//            recipient.setBalance(String.valueOf(1500 + parseInt(request.getAmount())));
+//            System.out.println("Success");
+//        }
+//        else {
+//            System.out.println("Err: " + senderResponse.getStatusCode());
+//        }
+
+        sender.setBalance(String.valueOf(1500 - parseInt(request.getAmount())));
+        recipient.setBalance(String.valueOf(1500 + parseInt(request.getAmount())));
+        System.out.println(sender.getBalance());
+        System.out.println(recipient.getBalance());
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping

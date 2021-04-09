@@ -19,11 +19,10 @@ import java.util.List;
 @RequestMapping("purchase")
 public class PurchaseController {
 
-        @PostMapping
-        public ResponseEntity create(@RequestBody Request request) {
-            System.out.println(request);
-
-            return ResponseEntity.ok().build();
-        }
+//        @PostMapping
+//        public ResponseEntity create(@RequestBody Request request) {
+//            System.out.println(request);
+//
+//            return ResponseEntity.ok().build();
+//        }
     }
-}

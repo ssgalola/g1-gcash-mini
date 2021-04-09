@@ -3,8 +3,6 @@ package ph.apper.purchase.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ph.apper.purchase.exception.TransferNotFoundException;
-import ph.apper.purchase.payload.GetTransferResponse;
 import ph.apper.purchase.payload.TransferData;
 import ph.apper.purchase.payload.TransferMoney;
 import ph.apper.purchase.payload.TransferMoneyResponse;
@@ -51,25 +49,6 @@ public class TransferService {
         transferStream.forEach(transfer -> transferDataList.add(toTransferData(transfer)));
 
         return transferDataList;
-    }
-
-    private Transfer getTransferById(String id) throws TransferNotFoundException {
-        return transfers.stream()
-                .filter(transfer -> id.equals(transfer.getTransferID()))
-                .findFirst()
-                .orElseThrow(() -> new TransferNotFoundException("Transfer " + id + " not found"));
-    }
-
-    public GetTransferResponse getTransfer(String id) throws TransferNotFoundException {
-        Transfer transfer = getTransferById(id);
-
-        GetTransferResponse response = new GetTransferResponse();
-        response.setTransferID(transfer.getTransferID());
-        response.setSenderID(transfer.getSenderID());
-        response.setRecipientID(transfer.getRecipientID());
-        response.setAmount(transfer.getAmount());
-
-        return response;
     }
 
     private TransferData toTransferData (Transfer t) {

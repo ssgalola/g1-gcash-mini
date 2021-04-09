@@ -10,6 +10,5 @@ public class Transfer {
     private String amount;
 
     public Transfer(String transferID) {
-        this.transferID = transferID;
     }
 }
